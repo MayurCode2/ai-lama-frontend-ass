@@ -2,11 +2,27 @@ import React from "react";
 import Sidebar from "../../components/Sidebar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import { logoutUser } from "../auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 function Settings() {
   // State for managing the active button and user data
 
   const userData = JSON.parse(localStorage.getItem("user"));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Perform any additional logout actions (e.g., clearing local storage, redirecting, etc.)
+    // ...
+
+    // Dispatch the logout action
+
+    navigate("/login"); 
+    dispatch(logoutUser());
+  };
 
   return (
     <div className="flex">
@@ -25,6 +41,7 @@ function Settings() {
             <p className="text-primaryblue ml-2">Account Settings</p>
           </div>
           <div className="flex mr-4">
+            <button onClick={handleLogout} className=" text-primaryred"> Logout</button>
             <div className="w-7 h-7 rounded-full mx-3 bg-lime-600"></div>
             <p className=" text-sm">user:{userData.username}</p>
             <NotificationsOutlinedIcon className="h-8" />
