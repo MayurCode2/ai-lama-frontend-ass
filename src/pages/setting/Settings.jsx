@@ -14,13 +14,13 @@ function Settings() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout =async () => {
     // Perform any additional logout actions (e.g., clearing local storage, redirecting, etc.)
     // ...
 
     // Dispatch the logout action
 
-    navigate("/login"); 
+    await navigate("/login"); 
     dispatch(logoutUser());
   };
 
