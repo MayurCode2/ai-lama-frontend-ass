@@ -4,6 +4,7 @@ import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import axios from "axios";
 
 const Display = () => {
+  const [successMessage, setSuccessMessage] = useState("");
   const [formData, setFormData] = useState({
     primaryColor: "",
     fontColor: "",
@@ -16,7 +17,7 @@ const Display = () => {
   });
   const [loading, setLoading] = useState(false); 
 const getToken = localStorage.getItem("token");
-console.log(getToken)
+
 
   const validateForm = () => {
     // Basic validation example
@@ -43,7 +44,7 @@ console.log(getToken)
     try {
       // Assuming you have the token stored in localStorage
       // Send data to the API using Axios with the token in the header
-      const response = await axios.post("http://localhost:8080/config/update", formData, {
+      const response = await axios.post("https://ailama.onrender.com/config/update", formData, {
         headers: {
           Authorization: `${getToken}`,
         },
@@ -51,7 +52,7 @@ console.log(getToken)
 
       // Handle the API response as needed
       console.log("API Response:", response.data);
-
+      setSuccessMessage("Data sent successfully");
       setFormData({
         primaryColor: "",
         fontColor: "",
@@ -95,6 +96,7 @@ console.log(getToken)
       <form onSubmit={handleSubmit} className=" bg-white  ">
         <div className=" flex justify-between">
           <div className="mb-4 w-2/5">
+         
             <label
               htmlFor="primaryColor"
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -129,9 +131,7 @@ console.log(getToken)
               onChange={handleChange}
               className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             />
-            <p className=" text-xs  text-smalltext">
-              In publishing and graphic design, Lorem ipsum is a
-            </p>
+            
           </div>
         </div>
 
@@ -290,6 +290,9 @@ console.log(getToken)
           >
             {loading ? "Loading..." : "Submit"}
           </button>
+              {successMessage && (
+                <p className="text-green-500 text-sm mt-1">{successMessage}</p>
+                )}
         </div>
       </form>
     </div>

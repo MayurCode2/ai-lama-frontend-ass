@@ -20,7 +20,7 @@ function Settings() {
 
     // Dispatch the logout action
 
-    await navigate("/login"); 
+    navigate("/login"); 
     dispatch(logoutUser());
   };
 

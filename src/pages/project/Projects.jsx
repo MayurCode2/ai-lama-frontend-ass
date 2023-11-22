@@ -6,18 +6,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getAllProjects,setSelectedProject } from './projectSlice';
 import { useEffect } from 'react';
+import { useState } from 'react';
+import Lottie from 'lottie-react';
+import animaring from "../../assets/Animation - 1700625338352.json"
 
 
 function Projects() {
-
+  const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
   const navigate = useNavigate(); // Get the history object for navigation
   const projects = useSelector((state) => state.projects.projects);
   console.log(projects)
 
   useEffect(() => {
+    setLoading(true);
     // Fetch projects when the component mounts
-    dispatch(getAllProjects());
+    dispatch(getAllProjects()).then(() => {
+      setLoading(false);
+    
+    })
   }, [dispatch]);
 
   const handleProjectClick = (project) => {
@@ -40,16 +47,19 @@ console.log(projects)
 
       <div  className='flex justify-between flex-wrap mt-4'>
         <h1 className='text-4xl text-center font-bold text-primaryblue'>Projects</h1>
-        <button
+        <button onClick={()=>navigate("/home")}
      
         className=" bg-black text-white px-6 py-2  flex items-center text-center rounded-md  "
       >
        <AddCircleRoundedIcon className=' w-8 h-8'/>
-        <span className=" text-center text-xl">Create New Project</span>
+       <div></div> <span className=" text-center text-xl">Create New Project</span>
       </button>
       </div>
 
       {/* card grid */}
+      <div className='flex justify-center items-center z-50'>
+      {loading && <Lottie animationData={animaring}  />}
+      </div>
       <div className='flex justify-between flex-wrap'>
         
       {projects.map((project) => (
